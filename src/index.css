@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .month-unki-grid {
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+}
+
+@media print {
+  .month-unki-grid {
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+}
