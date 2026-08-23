@@ -828,6 +828,17 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
         </div>
       </div>
 
+{/* ===== フッター追加箇所 ===== */}
+      <footer className="w-full py-6 text-center text-sm text-amber-900/80 border-t border-amber-900/10 mt-12 print:hidden">
+        <div className="container mx-auto px-4 space-y-1 font-serif">
+          <p>Every man is the architect of his own fortune.</p>
+          <p>©FURUKANA Garden 2026</p>
+          <p className="text-xs opacity-60 mt-2">© {new Date().getFullYear()} FURUKANA Garden. All rights reserved.</p>
+        </div>
+      </footer>
+
+
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap');
         @media print {
