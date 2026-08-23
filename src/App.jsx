@@ -450,17 +450,23 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
   return (
     <div className="min-h-screen bg-[#eef6f8] print:bg-white font-sans text-[#3d3933] leading-relaxed" style={{ fontFamily: "'Hiragino Mincho ProN', 'Yu Mincho', 'Georgia', serif" }}>
 
-{/* ===== ヘッダー画像 ===== */}
-<div className="w-full max-w-4xl mx-auto mb-6 print:hidden">
-  <img 
-    src="/LABO-H.png" 
-    alt="ヘッダーバナー" 
-    className="w-full h-auto rounded-xl shadow-sm object-cover"
-  />
-</div>
+
+
 
       <div className="max-w-[1060px] mx-auto px-4 pb-16 pt-25 space-y-6 print-container">
       
+{/* ===== ヘッダー画像（透過対応版） ===== */}
+<div className="w-full max-w-md mx-auto mb-6 print:hidden flex justify-center">
+  <img 
+    src="/LABO-H.png" 
+    alt="ヘッダーバナー" 
+    className="w-full h-auto object-contain"
+  />
+</div>
+
+
+
+
         {/* ===== 入力エリア ===== */}
         <div className="bg-white rounded-3xl px-8 py-6 shadow-sm border border-[#d0e8f0] print:hidden">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
@@ -469,7 +475,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-[#2d2a26] tracking-tight">KANA LABO｜鑑定システム</h1>
+                <h1 className="text-xl font-bold text-[#2d2a26] tracking-tight">鑑定システム</h1>
                 <p className="text-[10px] text-[#9a9288] tracking-[0.2em] uppercase font-sans">鑑定パラメータ入力</p>
               </div>
             </div>
