@@ -475,7 +475,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-[#2d2a26] tracking-tight">鑑定システム</h1>
+                <h1 className="text-xl font-bold text-[#2d2a26] tracking-tight">Fortune Engine</h1>
                 <p className="text-[10px] text-[#9a9288] tracking-[0.2em] uppercase font-sans">鑑定パラメータ入力</p>
               </div>
             </div>
