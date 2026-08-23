@@ -453,7 +453,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 
 
 
-      <div className="max-w-[1060px] mx-auto px-4 pb-16 pt-25 space-y-6 print-container">
+      <div className="max-w-[1060px] mx-auto px-4 pb-16 pt-8 space-y-6 print-container">
       
 {/* ===== ヘッダー画像（透過対応版） ===== */}
 <div className="w-full max-w-md mx-auto mb-6 print:hidden flex justify-center">
