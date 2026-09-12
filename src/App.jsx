@@ -610,7 +610,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 <div className="px-8 pb-6 print:px-5 print:pb-4 font-sans">
   <div className="flex flex-wrap gap-2">
     {[
-      { icon: <Activity className="w-3 h-3" />, label: `エネルギー値: ${result.totalEnergy}`, bg: 'bg-[#fdf8ee]', border: 'border-[#ede3c2]', text: 'text-[#7a6a40]' },
+      { icon: <Activity className="w-3 h-3" />, label: `運勢エネルギー値: ${result.totalEnergy}`, bg: 'bg-[#fdf8ee]', border: 'border-[#ede3c2]', text: 'text-[#7a6a40]' },
       { icon: <Ghost className="w-3 h-3" />, label: `空亡: ${result.kubo.join('')}`, bg: 'bg-[#f0f6f8]', border: 'border-[#c8d8e0]', text: 'text-[#3a5a6a]' },
       ...(result.specialFormations?.length > 0 ? [{ icon: <Layers className="w-3 h-3" />, label: result.specialFormations.join('・'), bg: 'bg-[#f0f8f0]', border: 'border-[#c8e0c8]', text: 'text-[#3a6a3a]' }] : []),
       { icon: <ShieldAlert className="w-3 h-3" />, label: `宿命中殺: ${result.shukumeiText}`, bg: 'bg-[#fdf5f5]', border: 'border-[#e8c8c8]', text: 'text-[#6a3a3a]' },
