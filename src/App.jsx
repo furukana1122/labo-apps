@@ -701,7 +701,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
     ];
 
     // 番号→角度（1が下から時計回り、画像に合わせて調整）
-    const numToAngle = (n) => ((n - 1) / total) * 2 * Math.PI + Math.PI / 2;
+    const numToAngle = (n) => ((n - 0.5) / total) * 2 * Math.PI + Math.PI / 2;
 
     // 各柱の干支番号
     const nichi = result.pillars.find(p => p.label === '日柱');
