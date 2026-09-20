@@ -788,10 +788,10 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 
 {/* 中心四分割（innerRまで拡大・色修正）*/}
 {[
-  { startAngle: Math.PI/2,  endAngle: Math.PI,       color:'#c5e8de' }, // 大地（左下）
-  { startAngle: Math.PI,    endAngle: 3*Math.PI/2,   color:'#b8dce8' }, // 風（左上）
-  { startAngle: 3*Math.PI/2,endAngle: 2*Math.PI,     color:'#f5d898' }, // 太陽（右上）
-  { startAngle: 0,          endAngle: Math.PI/2,     color:'#ece8a8' }, // 月（右下）
+  { startAngle: Math.PI/2,  endAngle: Math.PI,       color:'rgb(226, 250, 244)' }, // 大地（左下）
+  { startAngle: Math.PI,    endAngle: 3*Math.PI/2,   color:'#e3f6fd' }, // 風（左上）
+  { startAngle: 3*Math.PI/2,endAngle: 2*Math.PI,     color:'rgb(246, 233, 206)' }, // 太陽（右上）
+  { startAngle: 0,          endAngle: Math.PI/2,     color:'#f7f1d1' }, // 月（右下）
 ].map(({ startAngle, endAngle, color }, i) => {
   const x1 = cx + innerR * Math.cos(startAngle);
   const y1 = cy + innerR * Math.sin(startAngle);
