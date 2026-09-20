@@ -788,26 +788,8 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
             <path d={triangle} fill="rgba(90,90,90,0.12)" stroke="#3a3a3a" strokeWidth="1.5" strokeLinejoin="round" />
           )}
 
-          {/* 頂点マーカー */}
-          {[
-            { n: nichiBan, label:'日', color:'#8a6a40' },
-            { n: tsukiBan, label:'月', color:'#4a7a8a' },
-            { n: nenBan,   label:'年', color:'#6a7a4a' },
-          ].filter(d => d.n).map(({ n, label, color }) => {
-            const pt = ptOnCircle(n, innerR - 10);
-            return (
-              <g key={label}>
-                <circle cx={pt.x} cy={pt.y} r={10} fill={color} opacity="0.9" />
-                <text x={pt.x} y={pt.y} textAnchor="middle" dominantBaseline="middle"
-                  style={{ fontSize:'8px', fontWeight:700, fill:'white', fontFamily:'sans-serif' }}>
-                  {label}
-                </text>
-              </g>
-            );
-          })}
 
-          {/* コア円 */}
-          <circle cx={cx} cy={cy} r={coreR} fill="white" stroke="#c8c0b4" strokeWidth="1" />
+
 
           {/* エリアラベル（4隅） */}
           {[
@@ -822,18 +804,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
             </g>
           ))}
 
-          {/* 凡例 */}
-          {[
-            { n: nichiBan, label:`日柱 ${nichiBan}`, color:'#8a6a40' },
-            { n: tsukiBan, label:`月柱 ${tsukiBan}`, color:'#4a7a8a' },
-            { n: nenBan,   label:`年柱 ${nenBan}`,   color:'#6a7a4a' },
-          ].filter(d => d.n).map(({ label, color }, i) => (
-            <g key={i}>
-              <circle cx={130 + i * 50} cy={390} r={5} fill={color} />
-              <text x={140 + i * 50} y={390} dominantBaseline="middle"
-                style={{ fontSize:'9px', fill:'#5a5050', fontFamily:'sans-serif' }}>{label}</text>
-            </g>
-          ))}
+
 
         </svg>
       </div>
