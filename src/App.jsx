@@ -694,10 +694,10 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 
     // エリア設定
     const areas = [
-      { label:'大地', en:'Earth', start:1,  end:15, color:'#7dbfaa', textColor:'#2d6b58' },
-      { label:'風',   en:'Wind',  start:16, end:30, color:'#7bbdd4', textColor:'#1a5a7a' },
-      { label:'太陽', en:'Sun',   start:31, end:45, color:'#e8a94a', textColor:'#7a4a10' },
-      { label:'月',   en:'Moon',  start:46, end:60, color:'#d4c46a', textColor:'#6a5a10' },
+      { label:'大地', en:'Earth', start:1,  end:15, color:'#b1ddbb', textColor:'#2d6b58' },
+      { label:'風',   en:'Wind',  start:16, end:30, color:'#c2e4f1', textColor:'#1a5a7a' },
+      { label:'太陽', en:'Sun',   start:31, end:45, color:'#facb84', textColor:'#7a4a10' },
+      { label:'月',   en:'Moon',  start:46, end:60, color:'#f5e89c', textColor:'#6a5a10' },
     ];
 
     // 番号→角度（1が下から時計回り、画像に合わせて調整）
