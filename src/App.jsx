@@ -683,6 +683,165 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
           </div>
         </div>
 
+{/* ===== 60干支円盤 ===== */}
+<div className="bg-white rounded-3xl p-8 shadow-sm border border-[#e8e4de] break-inside-avoid print:rounded-xl print:p-5 print:shadow-none">
+  <h2 className="text-base font-bold flex items-center gap-2.5 mb-6 text-[#2d2a26]">
+    <Layers className="w-4 h-4 text-[#8a967d]" /> 60干支マップ
+  </h2>
+  {(() => {
+    const cx = 200, cy = 200, R = 170, innerR = 110, coreR = 70;
+    const total = 60;
+
+    // エリア設定
+    const areas = [
+      { label:'大地', en:'Earth', start:1,  end:15, color:'#7dbfaa', textColor:'#2d6b58' },
+      { label:'風',   en:'Wind',  start:16, end:30, color:'#7bbdd4', textColor:'#1a5a7a' },
+      { label:'太陽', en:'Sun',   start:31, end:45, color:'#e8a94a', textColor:'#7a4a10' },
+      { label:'月',   en:'Moon',  start:46, end:60, color:'#d4c46a', textColor:'#6a5a10' },
+    ];
+
+    // 番号→角度（1が下から時計回り、画像に合わせて調整）
+    const numToAngle = (n) => ((n - 1) / total) * 2 * Math.PI + Math.PI / 2;
+
+    // 各柱の干支番号
+    const nichi = result.pillars.find(p => p.label === '日柱');
+    const tsuki = result.pillars.find(p => p.label === '月柱');
+    const nen   = result.pillars.find(p => p.label === '年柱');
+
+    const nichiBan = nichi ? getKanshiNumber(nichi.kan, nichi.shi) : null;
+    const tsukiBan = tsuki ? getKanshiNumber(tsuki.kan, tsuki.shi) : null;
+    const nenBan   = nen   ? getKanshiNumber(nen.kan,   nen.shi)   : null;
+
+    const ptOnCircle = (n, r) => ({
+      x: cx + r * Math.cos(numToAngle(n)),
+      y: cy + r * Math.sin(numToAngle(n)),
+    });
+
+    // 三角形の頂点
+    const pts = [nichiBan, tsukiBan, nenBan].filter(Boolean).map(n => ptOnCircle(n, innerR - 10));
+    const triangle = pts.length === 3
+      ? `M ${pts[0].x},${pts[0].y} L ${pts[1].x},${pts[1].y} L ${pts[2].x},${pts[2].y} Z`
+      : null;
+
+    return (
+      <div className="flex justify-center">
+        <svg viewBox="0 0 400 400" style={{ width:'100%', maxWidth:380 }}>
+
+          {/* エリア扇形 */}
+          {areas.map(({ start, end, color }) => {
+            const startAngle = numToAngle(start) - (1/total) * Math.PI;
+            const endAngle   = numToAngle(end)   + (1/total) * Math.PI;
+            const x1 = cx + R * Math.cos(startAngle);
+            const y1 = cy + R * Math.sin(startAngle);
+            const x2 = cx + R * Math.cos(endAngle);
+            const y2 = cy + R * Math.sin(endAngle);
+            const xi1 = cx + innerR * Math.cos(startAngle);
+            const yi1 = cy + innerR * Math.sin(startAngle);
+            const xi2 = cx + innerR * Math.cos(endAngle);
+            const yi2 = cy + innerR * Math.sin(endAngle);
+            return (
+              <path key={start}
+                d={`M ${xi1},${yi1} L ${x1},${y1} A ${R} ${R} 0 0 1 ${x2},${y2} L ${xi2},${yi2} A ${innerR} ${innerR} 0 0 0 ${xi1},${yi1} Z`}
+                fill={color} opacity="0.85" />
+            );
+          })}
+
+          {/* 番号ラベル（放射状） */}
+          {Array.from({ length: total }, (_, i) => {
+            const n = i + 1;
+            const angle = numToAngle(n);
+            const labelR = (R + innerR) / 2;
+            const x = cx + labelR * Math.cos(angle);
+            const y = cy + labelR * Math.sin(angle);
+            const isMarked = [nichiBan, tsukiBan, nenBan].includes(n);
+            return (
+              <text key={n} x={x} y={y}
+                textAnchor="middle" dominantBaseline="middle"
+                style={{
+                  fontSize: isMarked ? '11px' : '8px',
+                  fontWeight: isMarked ? 700 : 400,
+                  fill: isMarked ? '#1a1a1a' : '#5a5050',
+                  fontFamily: 'sans-serif'
+                }}>
+                {n}
+              </text>
+            );
+          })}
+
+          {/* 仕切り線 */}
+          {Array.from({ length: total }, (_, i) => {
+            const angle = numToAngle(i + 1) - (0.5 / total) * 2 * Math.PI;
+            return (
+              <line key={i}
+                x1={cx + innerR * Math.cos(angle)} y1={cy + innerR * Math.sin(angle)}
+                x2={cx + R * Math.cos(angle)}       y2={cy + R * Math.sin(angle)}
+                stroke="white" strokeWidth="0.8" opacity="0.6" />
+            );
+          })}
+
+          {/* 外枠・内枠 */}
+          <circle cx={cx} cy={cy} r={R}      fill="none" stroke="#c8c0b4" strokeWidth="1.5" />
+          <circle cx={cx} cy={cy} r={innerR} fill="none" stroke="#c8c0b4" strokeWidth="1.5" />
+
+          {/* 三角形 */}
+          {triangle && (
+            <path d={triangle} fill="rgba(90,90,90,0.12)" stroke="#3a3a3a" strokeWidth="1.5" strokeLinejoin="round" />
+          )}
+
+          {/* 頂点マーカー */}
+          {[
+            { n: nichiBan, label:'日', color:'#8a6a40' },
+            { n: tsukiBan, label:'月', color:'#4a7a8a' },
+            { n: nenBan,   label:'年', color:'#6a7a4a' },
+          ].filter(d => d.n).map(({ n, label, color }) => {
+            const pt = ptOnCircle(n, innerR - 10);
+            return (
+              <g key={label}>
+                <circle cx={pt.x} cy={pt.y} r={10} fill={color} opacity="0.9" />
+                <text x={pt.x} y={pt.y} textAnchor="middle" dominantBaseline="middle"
+                  style={{ fontSize:'8px', fontWeight:700, fill:'white', fontFamily:'sans-serif' }}>
+                  {label}
+                </text>
+              </g>
+            );
+          })}
+
+          {/* コア円 */}
+          <circle cx={cx} cy={cy} r={coreR} fill="white" stroke="#c8c0b4" strokeWidth="1" />
+
+          {/* エリアラベル（4隅） */}
+          {[
+            { label:'大地', en:'Earth', x:60,  y:340, color:'#2d6b58' },
+            { label:'風',   en:'Wind',  x:60,  y:60,  color:'#1a5a7a' },
+            { label:'太陽', en:'Sun',   x:340, y:60,  color:'#7a4a10' },
+            { label:'月',   en:'Moon',  x:340, y:340, color:'#6a5a10' },
+          ].map(({ label, en, x, y, color }) => (
+            <g key={label}>
+              <text x={x} y={y-8} textAnchor="middle" style={{ fontSize:'14px', fontWeight:700, fill:color }}>{label}</text>
+              <text x={x} y={y+8} textAnchor="middle" style={{ fontSize:'9px', fill:color, fontFamily:'sans-serif', letterSpacing:'0.1em' }}>{en}</text>
+            </g>
+          ))}
+
+          {/* 凡例 */}
+          {[
+            { n: nichiBan, label:`日柱 ${nichiBan}`, color:'#8a6a40' },
+            { n: tsukiBan, label:`月柱 ${tsukiBan}`, color:'#4a7a8a' },
+            { n: nenBan,   label:`年柱 ${nenBan}`,   color:'#6a7a4a' },
+          ].filter(d => d.n).map(({ label, color }, i) => (
+            <g key={i}>
+              <circle cx={130 + i * 50} cy={390} r={5} fill={color} />
+              <text x={140 + i * 50} y={390} dominantBaseline="middle"
+                style={{ fontSize:'9px', fill:'#5a5050', fontFamily:'sans-serif' }}>{label}</text>
+            </g>
+          ))}
+
+        </svg>
+      </div>
+    );
+  })()}
+</div>
+
+
         {/* ===== バイオリズム＋大運 ページまとめラッパー ===== */}
         <div className="space-y-6 print:space-y-3" style={{ breakBefore: 'page', breakInside: 'avoid' }}>
 
