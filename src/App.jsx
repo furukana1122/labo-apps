@@ -747,26 +747,28 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
           })}
 
           {/* 番号ラベル（放射状） */}
-          {Array.from({ length: total }, (_, i) => {
-            const n = i + 1;
-            const angle = numToAngle(n);
-            const labelR = (R + innerR) / 2;
-            const x = cx + labelR * Math.cos(angle);
-            const y = cy + labelR * Math.sin(angle);
-            const isMarked = [nichiBan, tsukiBan, nenBan].includes(n);
-            return (
-              <text key={n} x={x} y={y}
-                textAnchor="middle" dominantBaseline="middle"
-                style={{
-                  fontSize: isMarked ? '11px' : '8px',
-                  fontWeight: isMarked ? 700 : 400,
-                  fill: isMarked ? '#1a1a1a' : '#5a5050',
-                  fontFamily: 'sans-serif'
-                }}>
-                {n}
-              </text>
-            );
-          })}
+{Array.from({ length: total }, (_, i) => {
+  const n = i + 1;
+  const angle = numToAngle(n);
+  const labelR = (R + innerR) / 2;
+  const x = cx + labelR * Math.cos(angle);
+  const y = cy + labelR * Math.sin(angle);
+  const isMarked = [nichiBan, tsukiBan, nenBan].includes(n);
+  const rotateDeg = (angle * 180 / Math.PI) + 90;
+  return (
+    <text key={n} x={x} y={y}
+      textAnchor="middle" dominantBaseline="middle"
+      transform={`rotate(${rotateDeg}, ${x}, ${y})`}
+      style={{
+        fontSize: isMarked ? '11px' : '8px',
+        fontWeight: isMarked ? 700 : 400,
+        fill: isMarked ? '#1a1a1a' : '#5a5050',
+        fontFamily: 'sans-serif'
+      }}>
+      {n}
+    </text>
+  );
+})}
 
           {/* 仕切り線 */}
           {Array.from({ length: total }, (_, i) => {
@@ -788,24 +790,24 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
             <path d={triangle} fill="rgba(90,90,90,0.12)" stroke="#3a3a3a" strokeWidth="1.5" strokeLinejoin="round" />
           )}
 
-{/* 中心四分割 */}
+{/* 中心四分割（innerRまで拡大・色修正）*/}
 {[
-  { startAngle: Math.PI/2,       endAngle: Math.PI,      color:'#c5e8de' }, // 大地
-  { startAngle: 0,               endAngle: Math.PI/2,    color:'#b8dce8' }, // 風
-  { startAngle: -Math.PI/2,      endAngle: 0,            color:'#f5d898' }, // 太陽
-  { startAngle: Math.PI,         endAngle: 3*Math.PI/2,  color:'#ece8a8' }, // 月
+  { startAngle: Math.PI/2,  endAngle: Math.PI,       color:'#c5e8de' }, // 大地（左下）
+  { startAngle: Math.PI,    endAngle: 3*Math.PI/2,   color:'#b8dce8' }, // 風（左上）
+  { startAngle: 3*Math.PI/2,endAngle: 2*Math.PI,     color:'#f5d898' }, // 太陽（右上）
+  { startAngle: 0,          endAngle: Math.PI/2,     color:'#ece8a8' }, // 月（右下）
 ].map(({ startAngle, endAngle, color }, i) => {
-  const x1 = cx + coreR * Math.cos(startAngle);
-  const y1 = cy + coreR * Math.sin(startAngle);
-  const x2 = cx + coreR * Math.cos(endAngle);
-  const y2 = cy + coreR * Math.sin(endAngle);
+  const x1 = cx + innerR * Math.cos(startAngle);
+  const y1 = cy + innerR * Math.sin(startAngle);
+  const x2 = cx + innerR * Math.cos(endAngle);
+  const y2 = cy + innerR * Math.sin(endAngle);
   return (
     <path key={i}
-      d={`M ${cx},${cy} L ${x1},${y1} A ${coreR} ${coreR} 0 0 1 ${x2},${y2} Z`}
+      d={`M ${cx},${cy} L ${x1},${y1} A ${innerR} ${innerR} 0 0 1 ${x2},${y2} Z`}
       fill={color} />
   );
 })}
-<circle cx={cx} cy={cy} r={coreR} fill="none" stroke="#c8c0b4" strokeWidth="1" />
+<circle cx={cx} cy={cy} r={innerR} fill="none" stroke="#c8c0b4" strokeWidth="1" />
 
 
           {/* エリアラベル（4隅） */}
