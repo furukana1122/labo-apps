@@ -718,7 +718,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
     });
 
     // 三角形の頂点
-    const pts = [nichiBan, tsukiBan, nenBan].filter(Boolean).map(n => ptOnCircle(n, innerR - 10));
+    const pts = [nichiBan, tsukiBan, nenBan].filter(Boolean).map(n => ptOnCircle(n, innerR * 0.85));
     const triangle = pts.length === 3
       ? `M ${pts[0].x},${pts[0].y} L ${pts[1].x},${pts[1].y} L ${pts[2].x},${pts[2].y} Z`
       : null;
@@ -729,8 +729,8 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 
           {/* エリア扇形 */}
           {areas.map(({ start, end, color }) => {
-            const startAngle = numToAngle(start) - (1/total) * Math.PI;
-            const endAngle   = numToAngle(end)   + (1/total) * Math.PI;
+            const startAngle = numToAngle(start) - (1/total) * 2 * Math.PI / 2;
+            const endAngle   = numToAngle(end)   + (1/total) * 2 * Math.PI / 2;
             const x1 = cx + R * Math.cos(startAngle);
             const y1 = cy + R * Math.sin(startAngle);
             const x2 = cx + R * Math.cos(endAngle);
