@@ -785,10 +785,6 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
           <circle cx={cx} cy={cy} r={R}      fill="none" stroke="#c8c0b4" strokeWidth="1.5" />
           <circle cx={cx} cy={cy} r={innerR} fill="none" stroke="#c8c0b4" strokeWidth="1.5" />
 
-          {/* 三角形 */}
-          {triangle && (
-            <path d={triangle} fill="rgba(90,90,90,0.12)" stroke="#3a3a3a" strokeWidth="1.5" strokeLinejoin="round" />
-          )}
 
 {/* 中心四分割（innerRまで拡大・色修正）*/}
 {[
@@ -808,6 +804,11 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
   );
 })}
 <circle cx={cx} cy={cy} r={innerR} fill="none" stroke="#c8c0b4" strokeWidth="1" />
+
+          {/* 三角形 */}
+          {triangle && (
+            <path d={triangle} fill="rgba(90,90,90,0.12)" stroke="#3a3a3a" strokeWidth="1.5" strokeLinejoin="round" />
+          )}
 
 
           {/* エリアラベル（4隅） */}
