@@ -788,7 +788,24 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
             <path d={triangle} fill="rgba(90,90,90,0.12)" stroke="#3a3a3a" strokeWidth="1.5" strokeLinejoin="round" />
           )}
 
-
+{/* 中心四分割 */}
+{[
+  { startAngle: Math.PI/2,       endAngle: Math.PI,      color:'#c5e8de' }, // 大地
+  { startAngle: 0,               endAngle: Math.PI/2,    color:'#b8dce8' }, // 風
+  { startAngle: -Math.PI/2,      endAngle: 0,            color:'#f5d898' }, // 太陽
+  { startAngle: Math.PI,         endAngle: 3*Math.PI/2,  color:'#ece8a8' }, // 月
+].map(({ startAngle, endAngle, color }, i) => {
+  const x1 = cx + coreR * Math.cos(startAngle);
+  const y1 = cy + coreR * Math.sin(startAngle);
+  const x2 = cx + coreR * Math.cos(endAngle);
+  const y2 = cy + coreR * Math.sin(endAngle);
+  return (
+    <path key={i}
+      d={`M ${cx},${cy} L ${x1},${y1} A ${coreR} ${coreR} 0 0 1 ${x2},${y2} Z`}
+      fill={color} />
+  );
+})}
+<circle cx={cx} cy={cy} r={coreR} fill="none" stroke="#c8c0b4" strokeWidth="1" />
 
 
           {/* エリアラベル（4隅） */}
@@ -807,6 +824,45 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 
 
         </svg>
+
+{/* エリア別バーグラフ */}
+<div className="mt-6 space-y-3 font-sans">
+  {(() => {
+    const areaData = [
+      { label:'大地', color:'#7dbfaa', border:'#5a9a88' },
+      { label:'風',   color:'#7bbdd4', border:'#4a8aaa' },
+      { label:'太陽', color:'#e8a94a', border:'#c07820' },
+      { label:'月',   color:'#d4c46a', border:'#a89a30' },
+    ];
+    const counts = { '大地':0, '風':0, '太陽':0, '月':0 };
+    [nichiBan, tsukiBan, nenBan].filter(Boolean).forEach(n => {
+      if (n >= 1  && n <= 15) counts['大地']++;
+      if (n >= 16 && n <= 30) counts['風']++;
+      if (n >= 31 && n <= 45) counts['太陽']++;
+      if (n >= 46 && n <= 60) counts['月']++;
+    });
+    const total = Object.values(counts).reduce((s,v) => s+v, 0) || 1;
+    return areaData.map(({ label, color, border }) => {
+      const pct = Math.round((counts[label] / total) * 100);
+      return (
+        <div key={label}>
+          <div className="flex justify-between items-center mb-1">
+            <div className="flex items-center gap-2">
+              <div className="w-2.5 h-2.5 rounded-full" style={{ background: border }} />
+              <span className="text-[13px] font-bold text-[#3d3933]">{label}</span>
+            </div>
+            <span className="text-[13px] font-bold text-[#3d3933]">{pct}%</span>
+          </div>
+          <div className="h-2.5 w-full bg-[#f5f2ee] rounded-full overflow-hidden border border-[#e8e4de]">
+            <div className="h-full rounded-full" style={{ width:`${pct}%`, background: border }} />
+          </div>
+        </div>
+      );
+    });
+  })()}
+</div>
+
+
       </div>
     );
   })()}
