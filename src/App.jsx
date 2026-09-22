@@ -689,7 +689,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
     <Layers className="w-4 h-4 text-[#8a967d]" /> 60干支マップ
   </h2>
   {(() => {
-    const cx = 200, cy = 200, R = 170, innerR = 110, coreR = 70;
+    const cx = 200, cy = 200, R = 170, innerR = 140, coreR = 70;
     const total = 60;
 
     // エリア設定
