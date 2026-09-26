@@ -683,6 +683,64 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
           </div>
         </div>
 
+{/* ===== 推命パラメーター ===== */}
+<div className="bg-white rounded-3xl p-8 shadow-sm border border-[#d0e8f0] break-inside-avoid print:rounded-xl print:p-5 print:shadow-none">
+  <h2 className="text-base font-bold flex items-center gap-2.5 mb-8 text-[#2d2a26] print:mb-4">
+    <PieChart className="w-4 h-4 text-[#8a967d]" /> 推命パラメーター
+  </h2>
+  <div className="flex flex-col md:flex-row print:flex-row items-center gap-8" style={{ maxWidth:620 }}>
+    <div className="relative flex-shrink-0 print:w-40 print:h-40" style={{ width:320, height:320 }}>
+      <svg viewBox="0 0 100 100" className="w-full h-full">
+        {(() => {
+          let cur = 0;
+          return result.gogyoList.map((item, idx) => {
+            const isOff = disabledGogyo.includes(item.name);
+            const start = (cur / 100) * 2 * Math.PI;
+            const end = ((cur + item.value) / 100) * 2 * Math.PI;
+            cur += item.value;
+            const x1 = 50 + 40 * Math.cos(start), y1 = 50 + 40 * Math.sin(start);
+            const x2 = 50 + 40 * Math.cos(end), y2 = 50 + 40 * Math.sin(end);
+            return <path key={idx} d={`M 50 50 L ${x1} ${y1} A 40 40 0 ${item.value > 50 ? 1 : 0} 1 ${x2} ${y2} Z`} fill={isOff ? '#c8c4bc' : CATEGORIES[item.name].border} stroke="white" strokeWidth="1.5" />;
+          });
+        })()}
+        <circle cx="50" cy="50" r="24" fill="white" />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-[9px] font-bold text-[#a8a196] uppercase tracking-tight font-sans">Balance</span>
+        <span className="text-lg font-bold text-[#3d3933]">
+          {result.gogyoList.filter(item => !disabledGogyo.includes(item.name)).reduce((sum, item) => sum + item.value, 0)}%
+        </span>
+      </div>
+    </div>
+    <div className="flex-1 w-full space-y-3 font-sans">
+      {result.gogyoList.map((item, idx) => {
+        const isOff = disabledGogyo.includes(item.name);
+        return (
+          <div key={idx}
+            onClick={() => {
+              setDisabledGogyo(prev =>
+                isOff ? prev.filter(n => n !== item.name) : [...prev, item.name]
+              );
+            }}
+            style={{ cursor: 'pointer' }}>
+            <div className="flex justify-between items-center mb-1">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full" style={{ background: isOff ? '#c8c4bc' : item.border }} />
+                <span className="text-[13px] font-bold" style={{ color: isOff ? '#a8a196' : '#3d3933' }}>{item.name}</span>
+                <span className="text-[10px] text-[#9a9288]">({item.stars.join('/')})</span>
+              </div>
+              <span className="text-[13px] font-bold" style={{ color: isOff ? '#a8a196' : '#3d3933' }}>{item.value}%</span>
+            </div>
+            <div className="h-2.5 w-full bg-[#f5f2ee] rounded-full overflow-hidden border border-[#e8e4de]">
+              <div className="h-full rounded-full" style={{ width:`${item.value}%`, background: isOff ? '#c8c4bc' : item.border, transition:'background 0.3s ease' }} />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
+
 {/* ===== 60干支円盤 ===== */}
 <div className="bg-white rounded-3xl p-8 shadow-sm border border-[#e8e4de] break-inside-avoid print:rounded-xl print:p-5 print:shadow-none">
   <h2 className="text-base font-bold flex items-center gap-2.5 mb-6 text-[#2d2a26]">
