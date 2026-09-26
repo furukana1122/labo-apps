@@ -723,7 +723,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
       : null;
 
     return (
-      <div className="flex justify-center">
+     <div className="flex flex-col md:flex-row justify-center items-center gap-8" style={{ margin:'0 auto' }}>
         <svg viewBox="0 0 400 400" style={{ width:'100%', maxWidth:380 }}>
 
           {/* エリア扇形 */}
@@ -828,7 +828,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
         </svg>
 
 {/* エリア別バーグラフ */}
-<div className="mt-6 space-y-3 font-sans">
+<div className="mt-0 space-y-3 font-sans w-full md:w-48">
   {(() => {
     const areaData = [
       { label:'大地', color:'#7dbfaa', border:'#5a9a88' },
