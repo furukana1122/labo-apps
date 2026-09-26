@@ -688,7 +688,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
   <h2 className="text-base font-bold flex items-center gap-2.5 mb-8 text-[#2d2a26] print:mb-4">
     <PieChart className="w-4 h-4 text-[#8a967d]" /> 推命パラメーター
   </h2>
-  <div className="flex flex-col md:flex-row print:flex-row items-center gap-8" style={{ maxWidth:620 }}>
+  <div className="flex flex-col md:flex-row print:flex-row items-center gap-8 justify-center" style={{ maxWidth:620, margin:'0 auto' }}>
     <div className="relative flex-shrink-0 print:w-40 print:h-40" style={{ width:320, height:320 }}>
       <svg viewBox="0 0 100 100" className="w-full h-full">
         {(() => {
